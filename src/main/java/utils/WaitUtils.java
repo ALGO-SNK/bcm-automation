@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class WaitUtils {
 
@@ -25,8 +27,20 @@ public class WaitUtils {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public List<WebElement> visibilityOfAll(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
     public WebElement visibilityOf(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public WebElement presenceOf(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    public List<WebElement> presenceOfAll(By locator) {
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
     public WebElement clickable(By locator) {
@@ -39,6 +53,34 @@ public class WaitUtils {
 
     public boolean invisible(By locator) {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public Alert alertIsPresent() {
+        return wait.until(ExpectedConditions.alertIsPresent());
+    }
+
+    public boolean textToBePresentInElement(By locator, String expectedText) {
+        return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, expectedText));
+    }
+
+    public boolean urlContains(String text) {
+        return wait.until(ExpectedConditions.urlContains(text));
+    }
+
+    public boolean titleContains(String text) {
+        return wait.until(ExpectedConditions.titleContains(text));
+    }
+
+    public void frameToBeAvailableAndSwitchToIt(By locator) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+    }
+
+    public void frameToBeAvailableAndSwitchToIt(WebElement frameElement) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameElement));
+    }
+
+    public boolean numberOfWindowsToBe(int expectedCount) {
+        return wait.until(ExpectedConditions.numberOfWindowsToBe(expectedCount));
     }
 
     public void waitForPageReady() {
