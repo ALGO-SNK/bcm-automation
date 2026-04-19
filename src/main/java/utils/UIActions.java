@@ -20,18 +20,36 @@ public class UIActions {
         waitUtils.clickable(locator).click();
     }
 
+    public void click(WebElement element) {
+        waitUtils.clickable(element).click();
+    }
+
     public void type(By locator, String text) {
         WebElement element = waitUtils.visibilityOf(locator);
         element.clear();
         element.sendKeys(text);
     }
 
+    public void type(WebElement element, String text) {
+        WebElement visibleElement = waitUtils.visibilityOf(element);
+        visibleElement.clear();
+        visibleElement.sendKeys(text);
+    }
+
     public String getText(By locator) {
         return waitUtils.visibilityOf(locator).getText().trim();
     }
 
+    public String getText(WebElement element) {
+        return waitUtils.visibilityOf(element).getText().trim();
+    }
+
     public boolean isDisplayed(By locator) {
         return waitUtils.isVisible(locator);
+    }
+
+    public boolean isDisplayed(WebElement element) {
+        return waitUtils.isVisible(element);
     }
 
     public void selectByVisibleText(By locator, String visibleText) {
@@ -42,5 +60,10 @@ public class UIActions {
     public void scrollIntoView(By locator) {
         WebElement element = waitUtils.visibilityOf(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+    }
+
+    public void scrollIntoView(WebElement element) {
+        WebElement visibleElement = waitUtils.visibilityOf(element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", visibleElement);
     }
 }

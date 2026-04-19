@@ -25,8 +25,16 @@ public class WaitUtils {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public WebElement visibilityOf(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     public WebElement clickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public WebElement clickable(WebElement element) {
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public boolean invisible(By locator) {
@@ -43,6 +51,15 @@ public class WaitUtils {
     public boolean isVisible(By locator) {
         try {
             visibilityOf(locator);
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public boolean isVisible(WebElement element) {
+        try {
+            visibilityOf(element);
             return true;
         } catch (TimeoutException e) {
             return false;
