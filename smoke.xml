@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+    Smoke Test Suite (5-10 minutes)
+    Fast validation suite for quick feedback.
+
+    Usage:
+      mvn test -DsuiteXmlFile=smoke.xml
+-->
+<suite name="Smoke-Suite" parallel="methods" thread-count="2" verbose="1">
+
+    <parameter name="BASE_URL"   value="https://mis-release.bromcom.dev/"/>
+    <parameter name="BROWSER"    value="chrome"/>
+    <parameter name="RESOLUTION" value="FULL_HD"/>
+
+    <listeners>
+        <listener class-name="com.brcm.utils.TestListener"/>
+    </listeners>
+
+    <test name="Smoke-Tests">
+        <groups><run><include name="smoke"/></run></groups>
+        <classes>
+            <class name="com.brcm.LoginTest">
+                <methods>
+                    <include name="loginPageShouldLoad"/>
+                    <include name="loginWithDefaultValidCredentials"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

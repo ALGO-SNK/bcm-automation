@@ -17,3 +17,5 @@ logs/
 
 ### Mac OS ###
 .DS_Store
+
+dumps/

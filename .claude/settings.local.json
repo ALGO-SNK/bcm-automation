@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn -q -DskipTests test-compile)",
+      "Bash(mvn -DskipTests test-compile)",
+      "Bash(mvn clean *)",
+      "Bash(find /c/Users/snkjh/Desktop/brcm-automation/src/test -name \"*.java\" -exec basename {} \\\\;)"
+    ]
+  }
+}
