@@ -20,7 +20,7 @@ import java.util.Properties;
 public final class ConfigReader {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigReader.class);
-    private static final String[] FILES = {"config.properties", "credentials.properties"};
+    private static final String[] FILES = {"config.properties", "credentials.properties", "secrets.properties"};
     private static final Properties PROPS = new Properties();
     private static volatile boolean loaded;
 
@@ -30,9 +30,9 @@ public final class ConfigReader {
         loadOnce();
         String override = System.getProperty(key);
         if (override != null && !override.isBlank()) {
-            return override;
+            return maybeDecrypt(key, override);
         }
-        return PROPS.getProperty(key);
+        return maybeDecrypt(key, PROPS.getProperty(key));
     }
 
     public static String getOrDefault(String key, String defaultValue) {
@@ -78,6 +78,22 @@ public final class ConfigReader {
             }
         } catch (IOException e) {
             LOG.warn("Unable to load {}", fileName, e);
+        }
+    }
+
+    private static String maybeDecrypt(String key, String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+
+        if (!CryptoUtils.isEncrypted(value)) {
+            return value;
+        }
+
+        try {
+            return CryptoUtils.decrypt(value);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            throw new IllegalStateException("Unable to decrypt config value for key: " + key, e);
         }
     }
 }

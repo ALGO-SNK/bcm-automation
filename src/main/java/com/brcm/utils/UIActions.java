@@ -45,7 +45,20 @@ public class UIActions {
     }
 
     private static void autoLog(String action, Object target, String value) {
-        LogUtils.action(action + " → " + describe(target) + " [" + value + "]");
+        LogUtils.action(action + " → " + describe(target) + " [" + maskIfSensitive(target, value) + "]");
+    }
+
+    private static String maskIfSensitive(Object target, String value) {
+        if (value == null) {
+            return "<null>";
+        }
+
+        String description = describe(target).toLowerCase();
+        if (description.contains("password") || description.contains("secret")) {
+            return "********";
+        }
+
+        return value;
     }
 
     private FailureContextException failureException(
@@ -145,7 +158,7 @@ public class UIActions {
             visible.clear();
             visible.sendKeys(text);
         } catch (Exception e) {
-            throw failureException("Failed to type text: " + text, e, element, "type");
+            throw failureException("Failed to type text: " + maskIfSensitive(element, text), e, element, "type");
         }
     }
 
@@ -161,7 +174,7 @@ public class UIActions {
         } catch (Exception e) {
             WebElement element = safeFind(locator);
             throw failureException(
-                    "Failed to type text: " + text + " in " + locator,
+                    "Failed to type text: " + maskIfSensitive(locator, text) + " in " + locator,
                     e,
                     element,
                     "type",
