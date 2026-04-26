@@ -30,7 +30,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "SchoolIDTextBox") private WebElement schoolIdInput;
     @FindBy(id = "UsernameTextBox") private WebElement usernameInput;
     @FindBy(id = "PasswordTextBox") private WebElement passwordInput;
-    @FindBy(id = "LoginButton") private WebElement loginButton;
+    @FindBy(id = "LoginButtons") private WebElement loginButton;
     @FindBy(id = "ErrorValidationSummary") private WebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
